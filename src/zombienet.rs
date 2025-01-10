@@ -1,6 +1,7 @@
 use std::process::Command;
 use std::path::Path;
 use std::fs;
+use crate::polkadot_sdk::install;
 
 pub fn add(template: &str) {
     println!("Installing zombienet with template: {}...", template);
