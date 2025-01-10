@@ -20,12 +20,10 @@ jobs:
       with:
         toolchain: nightly
         override: true
-    - name: Install cargo-tarpaulin
-      run: cargo install cargo-tarpaulin
     - name: Build
       run: cargo build --verbose
-    - name: Run tests with coverage
-      run: cargo tarpaulin --verbose --out lcov
+    - name: Run tests
+      run: cargo test --verbose
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v5
       with:
