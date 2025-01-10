@@ -1,0 +1,33 @@
+name: Run tests and upload coverage
+
+on: 
+  push
+
+jobs:
+  test:
+    name: Run tests and collect coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Rust
+        uses: actions/setup-rust@v2
+        with:
+          rust-version: stable
+
+      - name: Install Cargo Tarpaulin for coverage
+        run: cargo install cargo-tarpaulin
+
+      - name: Run tests with coverage
+        run: cargo tarpaulin --out Xml
+
+      - name: Upload results to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./tarpaulin-report.xml
+          flags: rust
+          name: codecov-coverage-report
